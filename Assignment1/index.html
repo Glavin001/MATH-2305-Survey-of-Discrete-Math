@@ -1,0 +1,76 @@
+<html>
+<head>
+
+</head>
+<body>
+
+  <label>String Length
+    <input name="string-length" type="number" value="10" onchange="refresh();" onkeypress="refresh();"></input>
+  </label>
+
+  <label>Answer: <span id="answer"></span></label>
+
+  <div id="results"></div>
+
+  <script>
+    function generateAllCases(strLength)
+    {
+      // From http://stackoverflow.com/a/10073788/2578205
+      function pad(n, width, z)
+      {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+      }
+      // Generate Bit String from a positive integer
+      function genBitString(num)
+      {
+        var str = num.toString(2);
+        return pad(str, 10, '0');
+      }
+      // Generate all possible bit strings
+      var allCases = [];
+      for (var i=0, len=Math.pow(2,strLength); i<len; i++)
+      {
+        allCases.push(genBitString(i));
+      }
+      return allCases;
+    }
+    // Filter
+    function filterBadCases(allCases)
+    {
+      // Regular Expression
+      var regex = new RegExp('^[01]*([1]{5})|([0]{5})[01]*$');
+      // See https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+      return allCases.filter(function(value, index, array) {
+        // See http://www.w3schools.com/jsref/jsref_regexp_test.asp
+        return regex.test(value);
+      });
+    }
+    //
+    function refresh()
+    {
+      var inputs = document.getElementsByName("string-length");
+      var $input = inputs[0];
+      try {
+        // Length of Bit string
+        var strLength = parseInt($input.value);
+        var allCases = generateAllCases(strLength);
+        // Good Cases
+        var goodCases = filterBadCases(allCases);
+        //
+        var $answer = document.getElementById("answer");
+        $answer.innerHTML = goodCases.length;
+        // 
+        var $results = document.getElementById("results");
+        $results.innerHTML = JSON.stringify(goodCases, undefined, 4);
+      } catch (e) { }
+
+    }
+    // First refresh
+    refresh();
+
+  </script>
+
+</body>
+</html>
