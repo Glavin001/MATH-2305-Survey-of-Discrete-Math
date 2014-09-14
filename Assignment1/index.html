@@ -4,12 +4,18 @@
 </head>
 <body>
 
-  <label>String Length
-    <input name="string-length" type="number" value="10" onchange="refresh();" onkeypress="refresh();"></input>
+  <label>Question: How many bit strings are there of length
+    <input name="string-length" type="number" value="10" onchange="refresh();" onkeypress="refresh();" style="width:4em;"></input>
+    that contain either 5 consecutive 0's or 5 consecutive 1's?
   </label>
+
+  <br/>
 
   <label>Answer: <span id="answer"></span></label>
 
+  <br/>
+
+  <div>Good cases:</div>
   <div id="results"></div>
 
   <script>
@@ -61,7 +67,7 @@
         //
         var $answer = document.getElementById("answer");
         $answer.innerHTML = goodCases.length;
-        // 
+        //
         var $results = document.getElementById("results");
         $results.innerHTML = JSON.stringify(goodCases, undefined, 4);
       } catch (e) { }
