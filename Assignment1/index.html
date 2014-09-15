@@ -29,16 +29,16 @@
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
       }
       // Generate Bit String from a positive integer
-      function genBitString(num)
+      function genBitString(num, len)
       {
         var str = num.toString(2);
-        return pad(str, 10, '0');
+        return pad(str, len, '0');
       }
       // Generate all possible bit strings
       var allCases = [];
       for (var i=0, len=Math.pow(2,strLength); i<len; i++)
       {
-        allCases.push(genBitString(i));
+        allCases.push(genBitString(i, strLength));
       }
       return allCases;
     }
